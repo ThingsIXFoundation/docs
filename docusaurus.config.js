@@ -57,15 +57,6 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Tutorial',
-                to: '/docs/intro',
-              },
-            ],
-          },
-          {
             title: 'Community',
             items: [
               {
@@ -86,17 +77,21 @@ const config = {
             title: 'More',
             items: [
               {
+                label: 'Homepage',
+                href: "https://www.thingsix.com",
+              },
+              {
                 label: 'Blog',
-                to: '/blog',
+                href: "https://blog.thingsix.com",
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/ThingsIXFoundation/',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: ` © ${new Date().getFullYear()} Stichting ThingsIX Foundation. All rights reserved. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
