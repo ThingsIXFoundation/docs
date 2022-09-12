@@ -38,11 +38,9 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      themeConfig: {
-        colorMode: {
-          defaultMode: 'dark',
-          disableSwitch: false,
-        },
+      colorMode: {
+        defaultMode: 'dark',
+        disableSwitch: false,
       },
       announcementBar: {
         id: 'wip',
