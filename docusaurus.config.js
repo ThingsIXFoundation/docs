@@ -67,6 +67,12 @@ const config = {
             position: 'left',
             label: 'Introduction',
           },
+          {
+            type: 'doc',
+            docId: 'ThingsIX/whitepaper',
+            position: 'left',
+            label: 'Whitepaper',
+          },
         ],
       },
       footer: {
