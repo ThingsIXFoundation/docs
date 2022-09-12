@@ -38,17 +38,14 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      themeConfig: {
-        colorMode: {
-          defaultMode: 'dark',
-          disableSwitch: false,
-          respectPrefersColorScheme: true,
-        },
+      colorMode: {
+        defaultMode: 'dark',
+        disableSwitch: false,
       },
       announcementBar: {
         id: 'wip',
         content:
-          'Warning: Work in progress. ThingsIX is in early stages of development and the documentation could be inaccurate',
+          'Warning: Work in progress. ThingsIX is in early stages of development and the documentation could be inaccurate or missing',
         backgroundColor: '#bd0016',
         textColor: '#ffffff',
         isCloseable: false,
