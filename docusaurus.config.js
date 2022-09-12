@@ -12,7 +12,7 @@ const config = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.png',
   organizationName: 'ThingsIXFoundation', // Usually your GitHub org/user name.
   projectName: 'docs', // Usually your repo name.
 
@@ -38,11 +38,27 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      themeConfig: {
+        colorMode: {
+          defaultMode: 'dark',
+          disableSwitch: false,
+          respectPrefersColorScheme: true,
+        },
+      },
+      announcementBar: {
+        id: 'wip',
+        content:
+          'Warning: Work in progress. ThingsIX is in early stages of development and the documentation could be inaccurate',
+        backgroundColor: '#bd0016',
+        textColor: '#ffffff',
+        isCloseable: false,
+      },
       navbar: {
         title: 'ThingsIX',
         logo: {
           alt: 'ThingsIX Logo',
           src: 'img/logo.svg',
+          srcDark: 'img/logo_dark.svg',
         },
         items: [
           {
@@ -50,6 +66,12 @@ const config = {
             docId: 'intro',
             position: 'left',
             label: 'Introduction',
+          },
+          {
+            type: 'doc',
+            docId: 'ThingsIX/whitepaper',
+            position: 'left',
+            label: 'Whitepaper',
           },
         ],
       },
@@ -60,16 +82,12 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
                 label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
+                href: 'https://discord.gg/Qt6A7VJVrd',
               },
               {
                 label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
+                href: 'https://twitter.com/Things_IX',
               },
             ],
           },
