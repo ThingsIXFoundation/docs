@@ -96,10 +96,6 @@ const config = {
                 href: "https://www.thingsix.com",
               },
               {
-                label: 'Blog',
-                href: "https://blog.thingsix.com",
-              },
-              {
                 label: 'GitHub',
                 href: 'https://github.com/ThingsIXFoundation/',
               },
