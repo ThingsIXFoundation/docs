@@ -66,7 +66,7 @@ const config = {
           },
           {
             type: 'doc',
-            docId: 'ThingsIX/whitepaper',
+            docId: 'whitepaper',
             position: 'left',
             label: 'Whitepaper',
           },
