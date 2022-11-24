@@ -31,6 +31,10 @@ Once you decided where to run the forwarder it's time to install it. The
 recommended method to run the forwarder is through a docker image that you can
 find [here](https://github.com/ThingsIXFoundation/packet-handling/pkgs/container/packet-handling%2Fforwarder).
 
+We also ship binaires that you can find on the 
+[release](https://github.com/ThingsIXFoundation/packet-handling/releases) page
+under `Assets`.
+
 If you prefer to build the forwarder from source you can take a look at its
 [repository](https://github.com/thingsIXFoundation/packet-handling). You will
 require the Golang compiler that can be found [here](https://go.dev) or install
@@ -45,16 +49,20 @@ $ cd packet-handling/cmd/forwarder
 $ go build -ldflags="-s -w"
 ```
 
+This guide assumes the use of the docker image.
+
 ## Configuration
-The forwarder offers an `--net` flag that can be used to start the forwarder
-with default settings for given environment. Supported environment are `dev`, 
-`test`, `main` or `""` in case you don't want to use a default configuration and 
-configure everything through explicit configuration. If you don't require custom
-configuration using the `--net <network>` is the most convenient method.
+The forwarder comes with build in configuration for all environments. The
+defaults are in most cases sufficient. But it is possible to create custom
+configuration if needed. You can configure which network the forwarder needs to 
+connect to with the `--net` option. By default this is `main` for mainnet, other
+values are `dev`, `test` or `""` if you don't want any defaults and configure 
+everything yourself.
 
 The source repository contains an example configuration that describes all 
-options and can be found [here](https://github.com/ThingsIXFoundation/packet-handling/blob/main/cmd/forwarder/example-config.yaml). Most should be self explanatory but the 
-`Gateways` section require additional explanation.
+options and can be found [here](https://github.com/ThingsIXFoundation/packet-handling/blob/main/cmd/forwarder/example-config.yaml). 
+Most should be self explanatory but the `Gateways` section require additional
+explanation.
 
 ### Gateway store
 The forwarder uses a gateway store that serves several purposes:
@@ -79,38 +87,64 @@ and unwanted gateways can be removed. After cleanup this file can be imported in
 the store. If you have many gateways this saves a lot of error prune work.
 
 ## Start forwarder
-You can pass custom configuration using the `--config` option. In this guide
-we will start the forwarder on mainnet with the default configuration and an 
-empty gateway store where we will add a gateway later. Since `--net main` is the
-default we can omit it and start the forwarder without arguments to connect to
-ThingsIX mainnet.
+In this guide we will run the container in the foreground so it can be stopped 
+and restarted from the command line. In practice you probably want to run the 
+container in the background, [detached](https://docs.docker.com/engine/reference/run/#/detached--d)
+and with a [restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart)
+policy. The forwarder opens an endpoint on port `1680/udp` for gateways to 
+connect to. This port must be published. The forwarder uses 
+`/etc/thingsix-forwarder` as default location where to load and store data.
+Therefore we mount the local directory `/etc/thingsix-forwarder/` into the
+container.
 
 ```bash
-$ ./forwarder
-INFO[2022-11-24T09:37:34+01:00] ***Starting ThingsIX Forwarder connected to mainnet***
-INFO[2022-11-24T09:37:34+01:00] use gateway store                             path=/etc/thingsix-forwarder/gateways.yaml
-WARN[2022-11-24T09:37:34+01:00] accept all gateways in gateway store, including non-registered gateways
-INFO[2022-11-24T09:37:34+01:00] loaded gateway store                          #-gateways=0
-INFO[2022-11-24T09:37:34+01:00] Semtech UDP backend                           fake_rx_time=false udp_bind="0.0.0.0:1680"
+$ docker run --rm --name thingsix-forwarder \
+  -p 1680:1680/udp \
+  -v /etc/thingsix-forwarder:/etc/thingsix-forwarder \
+  ghcr.io/thingsixfoundation/packet-handling/forwarder:${version}
+
+time="2022-11-24T12:55:32Z" level=info msg="***Starting ThingsIX Forwarder connected to mainnet***"
+time="2022-11-24T12:55:32Z" level=info msg="use gateway store" path=/etc/thingsix-forwarder/gateways.yaml
+time="2022-11-24T12:55:32Z" level=warning msg="accept all gateways in gateway store, including non-registered gateways"
+time="2022-11-24T12:55:32Z" level=info msg="loaded gateway store" #-gateways=0
+time="2022-11-24T12:55:32Z" level=info msg="Semtech UDP backend" fake_rx_time=false udp_bind="0.0.0.0:1680"
 ```
 
-You will see a warning. That is normal and informs you that the forwarder 
-accepts data from gateways that are in the gateway store but don't have to be 
-onboarded on ThingsIX since that is currently not required.
+You will get a warning. That is normal and tells you that the forwarder accepts 
+data from all gateways in the gateway store. Not only the gateways that have
+been onboarded on ThingsIX since that is not required at the moment. You can
+also see that the gateway store currently is empty. We will add a gateway in the
+next section.
 
-:::caution
-All default configurations will use the gateway store and record unknown 
-gateways on the same file location. Be careful starting the forwarder on the
-same machine with different networks since they share the same gateway store 
-files. If you have separate gateways for the environment either use a custom 
-configuration, run the forwarder on different machines, or use a docker image 
-and use network unique volumes for `/etc/thingsix-forwarder`.
-:::
+If you need to pass in custom configuration you can use the `--config` option.
+Lets assume you want to rename the default gateway store from
+`/etc/thingsix-forwarder/gateways.yaml` to 
+`/etc/thingsix-forwarder/my-gateway-store.yaml`.
 
-## Gateway store
+We create the following file `/etc/thingsix-forwarder/my-custom-config.yaml`:
+```yaml
+forwarder:
+   gateways:
+      store:
+         file: /etc/thingsix-forwarder/my-gateway-store.yaml
+```
+
+Start the forwarder and order it to use the custom configuration file:
+```bash
+docker run --rm --name thingsix-forwarder \
+  -p 1680:1680/udp \
+  -v /etc/thingsix-forwarder:/etc/thingsix-forwarder \
+  ghcr.io/thingsixfoundation/packet-handling/${version} \
+  --config /etc/thingsix-forwarder/my-custom-config.yaml
+
+time="2022-11-24T12:57:46Z" level=info msg="***Starting ThingsIX Forwarder connected to mainnet***"
+time="2022-11-24T12:57:46Z" level=info msg="use gateway store" path=/etc/thingsix-forwarder/my-gateway-store.yaml
+```
+
+## Fill gateway store
 As can be seen from the logging the forwarder opens the endpoint for gateways on 
 `0.0.0.0:1680/UDP`. Make sure this endpoint is accessible for your gateways and 
-that your gateways use Semtech's UDP protocol. The next thing is to configure 
+that your gateways uses Semtech's UDP protocol. The next step is to configure 
 your gateway to use this endpoint. This is gateway specific and outside of this
 guide. Please see your gateways documentation how to configure the endpoint.
 
@@ -118,8 +152,8 @@ Once you have configured your gateway to connect to the ThingsIX forwarder you
 will see the following in the logs:
 
 ```bash
-WARN[2022-11-24T10:25:15+01:00] event from unknown gateway, drop event        gw_local_id=0016c001f1500812
-INFO[2022-11-24T10:25:15+01:00] unknown gateway recorded                      file=/etc/thingsix-forwarder/unknown_gateways.yaml gw_local_id=0016c001f1500812
+time="2022-11-24T13:42:39Z" level=warning msg="event from unknown gateway, drop event" gw_local_id=0016c001f1500812
+time="2022-11-24T13:42:39Z" level=info msg="unknown gateway recorded" file=/etc/thingsix-forwarder/unknown_gateways.yaml gw_local_id=0016c001f1500812gw_local_id=0016c001f1500812
 ```
 
 This indicates that a gateway with id `0016c001f1500812` connected to your 
@@ -137,16 +171,21 @@ methods:
 ### Add single gateway
 This sub command expects 2 arguments:
 1. the gateway store file, its default location is `/etc/thingsix-forwarder/gateways.yaml`
-2. the gateway id
+2. the gateway id of the gateway to add
 
 ```bash
-$ ./forwarder gateway add /etc/thingsix-forwarder/gateways.yaml 0016c001f1500812
+$ docker run --rm \
+        -v /etc/thingsix-forwarder:/etc/thingsix-forwarder \
+        ghcr.io/thingsixfoundation/packet-handling/forwarder:${version} \
+        gateway add /etc/thingsix-forwarder/gateways.yaml 0016c001f1500812
+
 +---+------------------------------------------------------------------+------------------+------------------+
 |   |                           THINGSIX ID                            |     LOCAL ID     |    NETWORK ID    |
 +---+------------------------------------------------------------------+------------------+------------------+
-| 1 | 675f08816d81c78dba7f494a97116a94635cec28b4ebaa0943c0446c89019833 | 0016c001f1500812 | ed90aad87fa13a27 |
+| 1 | d418d9c7d88f582c9caadf55c50e31b787056e185d179795b3621fe90049c39c | 0016c001f1500812 | 82f25fa0a61dcd0e |
 +---+------------------------------------------------------------------+------------------+------------------+
 ```
+
 If the gateway was added you will see 3 id's:
 - `THINGSIX ID`, once tokens support is added this is the gateway ID that needs 
 to be registered on ThingsIX. It is derived from the generated gateways private
@@ -162,65 +201,90 @@ We can check that the gateway is added to the forwarders store:
 ```bash
 $ cat /etc/thingsix-forwarder/gateways.yaml
 - local_id: 0016c001f1500812
-  private_key: 7c1f3f7b2c0de8e6983ee4d06426b3dd15173bc365275f407a5897694d4361d2
+  private_key: 4f97538eda76d6e65779e655f407c6c05a44512508bc34a47f64f163b161d03d
 ```
 
 :::info
 Currently the forwarder is not smart enough to detect gateway store changes and
-reload them while running. After you added/removed a gateway from the store the
+reload them at runtime. After you added/removed a gateway from the store the
 forwarder needs to be restarted.
 :::
 
 ### Batch import gateways
-Another method is to batch import a list of recorded gateways. If you have many 
-gateways to add to the gateway store adding them one by one is tedious job. The 
-forwarder therefore supports batch imports. Gateways that are already in the
-store are ignored.
+Another method is to batch import a list of recorded gateways. Adding gateways
+one by one becomes quickly a tediouos job. The forwarder supports batch imports.
+Gateways that are already in the store are ignored so its safe to run this
+command multiple times.
 
 This sub command is already prepared to support on-boarding gateways in ThingsIX.
-Therefore it expects more arguments that can be set to dummy values. It also 
-prints an JSON array that can be used to onboard the gateways later through 
-the ThingIX dashboard. Since that isn't required it can be ignored.
+Therefore it expects more arguments than when adding a single gateway. For now
+you can use dummy values. Once done it prints an JSON array that can be used to 
+onboard the gateways through the ThingIX dashboard. Since that isn't required it
+can be ignored.
 
 ```bash
-$ ./forwarder gateway import /etc/thingsix-forwarder/gateways.yaml 0 0x0 0x0 /etc/thingsix-forwarder/unknown_gateways.yaml
-INFO[0000] imported gateway 0016c001f1500812
-[{"gateway_id":"0x7f1cc3b5c4e798a18f66cf902571f935ce2f627eb37ccf79850decf18a919645","version":1,"local_id":"0016c001f1500812","network_id":"45260200c6bc99ac","address":"0xf122143b7c176b7e86bb001e2176ef0491326af3","chain_id":0,"gateway_onboard_signature":"0xa37513b9085ba0fd513b34fd3e530df9d35317b60d2c53f64cba25f54a9a031428239cf6cfbaebfc9f1aab7bd3611702070de8adee769906646fb549b7e5be5c1b"}]
-INFO[0000] imported 1 gateways, don't forget to onboard these
+$ docker run --rm \
+        -v /etc/thingsix-forwarder:/etc/thingsix-forwarder \
+        ghcr.io/thingsixfoundation/packet-handling/forwarder:${version} \
+        gateway import /etc/thingsix-forwarder/gateways.yaml 0 0x0 0x0 /etc/thingsix-forwarder/unknown_gateways.yaml
+
+time="2022-11-24T13:49:41Z" level=info msg="imported gateway 0016c001f1500812"
+time="2022-11-24T13:49:41Z" level=info msg="imported 1 gateways, don't forget to onboard these"
+[{"gateway_id":"0x144542caeacd9bf9f01bac258adc1ba6ec22e49bf3f0a70d5f7b37c10cb16b03","version":1,"local_id":"0016c001f1500812","network_id":"4d7a325d4e0ee7d3","address":"0xc90b57fe9ca972d21223dae9197549ce201aeacd","chain_id":0,"gateway_onboard_signature":"0x43b20c2c3ed0cb306fdd3eb13550dd4a3cc2af162d7157289f96adeb235bc2fd6eb8234cde8d0c620acd2edb917459990dc1417c4d8fa19570fc68e1bb0048521c"}]
 ```
 And check that the gateway is added to the gateway store.
 ```bash
 $ cat /etc/thingsix-forwarder/gateways.yaml
 - local_id: 0016c001f1500812
-  private_key: 5487847f269e31515b6509a49bf0e4f0cd421c5c777058ee21ced22677502f9e
+  private_key: 8f8127290513c3cf4f56031163285df288519c1b6527417c87b96e05abd10fa4
 ```
 
 ### Gateway store overview
 For an overview of gateways in the store use the `gateway list` sub command:
 
 ```bash
-$ ./forwarder gateway list /etc/thingsix-forwarder/gateways.yaml
+$ docker run --rm \
+        -v /etc/thingsix-forwarder:/etc/thingsix-forwarder \
+        ghcr.io/thingsixfoundation/packet-handling/forwarder:0.0.1-beta.1 \
+        gateway list /etc/thingsix-forwarder/gateways.yaml
+
 +---+------------------------------------------------------------------+------------------+------------------+
 |   |                           THINGSIX ID                            |     LOCAL ID     |    NETWORK ID    |
 +---+------------------------------------------------------------------+------------------+------------------+
-| 1 | 7f1cc3b5c4e798a18f66cf902571f935ce2f627eb37ccf79850decf18a919645 | 0016c001f1500812 | 45260200c6bc99ac |
+| 1 | 144542caeacd9bf9f01bac258adc1ba6ec22e49bf3f0a70d5f7b37c10cb16b03 | 0016c001f1500812 | 4d7a325d4e0ee7d3 |
 +---+------------------------------------------------------------------+------------------+------------------+
 ```
 
 ### Restart forwarder
-After the forwarder is restarted it should now log that it loaded the gateway
-store with your gateway(s). Once one of your gateways connect you will see an
-online statement in the logs indicating that its a known gateway and that it 
-will forward packets to the ThingsIX network.
+After the forwarder is restarted it should load the just added gateways from the
+store. When one of your gateways connect you will see an online statement in the
+logs indicating that its a known gateway and that it will forward its packets to
+the ThingsIX network.
 
 ```bash
-$ ./forwarder
-INFO[2022-11-24T10:53:53+01:00] ***Starting ThingsIX Forwarder connected to mainnet***
-INFO[2022-11-24T10:53:53+01:00] use gateway store                             path=/etc/thingsix-forwarder/gateways.yaml
-WARN[2022-11-24T10:53:53+01:00] accept all gateways in gateway store, including non-registered gateways
-INFO[2022-11-24T10:53:53+01:00] loaded gateway store                          #-gateways=1
+$ docker run --rm --name thingsix-forwarder \
+  -p 1680:1680/udp \
+   -v /etc/thingsix-forwarder:/etc/thingsix-forwarder ghcr.io/thingsixfoundation/packet-handling/forwarder:${version}
+
+time="2022-11-24T13:52:20Z" level=info msg="***Starting ThingsIX Forwarder connected to mainnet***"
+time="2022-11-24T13:52:20Z" level=info msg="use gateway store" path=/etc/thingsix-forwarder/gateways.yaml
+time="2022-11-24T13:52:20Z" level=warning msg="accept all gateways in gateway store, including non-registered gateways"
+time="2022-11-24T13:52:20Z" level=info msg="loaded gateway store" #-gateways=1
 ...
-INFO[2022-11-24T10:53:56+01:00] gateway online                                gw_local_id=0016c001f1500812 gw_network_id=45260200c6bc99ac
+time="2022-11-24T13:53:30Z" level=info msg="gateway online" gw_local_id=0016c001f1500812 gw_network_id=4d7a325d4e0ee7d3
 ...
-INFO[2022-11-24T10:57:22+01:00] delivered packet                              airtime="113.152µs" coderate=CR_4_5 dev_addr=00b00b1e ...
+time="2022-11-24T13:54:11Z" level=info msg="delivered packet" airtime="113.152µs" coderate=CR_4_5 dev_addr=00b00b1e ...
 ```
+
+### Backup and security of the gateway store
+Since the gateway store holds the private key for each gateway it is important
+to make a backup of the gateway store. If the store is lost you will need to
+import the gateways again in a new store. This generates new keys forcing you
+to onboard the gateways again on ThingsIX when token support is added. 
+Onboarding gateways and setting gateway details comes with a fee that needs to 
+be paid again. Therefore loosing your gateway store will come with a price.
+
+Gateways that are onboarded on ThingsIX are stored in your Polygon wallet. If
+someone captures your gateway store it is not possible to take ownership of 
+these gateways. That can only happen if someone gains access to your Polygon
+wallet.
