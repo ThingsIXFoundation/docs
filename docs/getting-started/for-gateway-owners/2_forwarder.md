@@ -72,7 +72,7 @@ need to be registered in ThingsIX (once token support is added). This requires
 the gateway to have an identity and the ability to proof that identity. ThingsIX
 uses [ECDSA keys](../../background/identities) for identities and stores this
 key together with the gateways `local_id` in the gateway store. The `local_id`
-is known as the gateway id and typically derived from the gateway's hardware. It
+is known as the Gateway EUI and typically derived from the gateway's hardware. It
 is used in the communication between the gateway and the forwarder. While the 
 gateway ThingsIX network id is derived from the private key and used in the 
 communication between the forwarder and the ThingsIX network.
