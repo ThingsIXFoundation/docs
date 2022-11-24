@@ -1,9 +1,9 @@
 ---
 sidebar_position: 2
-title: ThingsIX packet forwarder
+title: Installing forwarder
 ---
 
-# Introduction
+# Installing forwarder
 The ThingsIX packet forwarder is the portal for your gateways to the ThingsIX 
 network. Your gateways will need to send received packets to the ThingsIX 
 forwarder and the forwarder will send them to their next destination. Once 
@@ -13,7 +13,7 @@ supports [Semtech's UDP protocol](https://github.com/Lora-net/packet_forwarder/b
 Therefore your gateway will need to support it or you will need to use a bridge 
 that converts from your gateways protocol to Semtech's UDP protocol.
 
-## Install forwarder
+##  Where to install the forwarder?
 The first thing to decide is where to install the forwarder. You can run it on
 the gateway or on a server. What the best solution is depends on your personal
 situation. Some considerations are:
@@ -96,6 +96,10 @@ connect to. This port must be published. The forwarder uses
 `/etc/thingsix-forwarder` as default location where to load and store data.
 Therefore we mount the local directory `/etc/thingsix-forwarder/` into the
 container.
+
+Replace `${version}` with the latest image version that can be found 
+[here](https://github.com/ThingsIXFoundation/packet-handling/releases) 
+(for example v1.0.0).
 
 ```bash
 $ docker run --rm --name thingsix-forwarder \
