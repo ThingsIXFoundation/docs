@@ -51,7 +51,10 @@ ThingsIX keys. Since half of the keys are valid a brute force approach to simply
 generate keypairs until a valid ThingsIX keypair is created is practically
 feasible.
 
-Here are some examples how to generate a valid ThingsIX key:
+Both the ThingsIX packet forwarder and router have support to automatically
+generate valid ThingsIX identity keys. But it is also possible to generate these
+keys with your prefer software. Here are some examples how to generate a valid
+key:
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -64,7 +67,7 @@ import TabItem from '@theme/TabItem';
 
 set -e
 
-PRIVATE_KEY_FILE=private-key.pem
+PRIVATE_KEY_FILE=thingsix-private-key.pem
 
 while :
 do
