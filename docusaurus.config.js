@@ -15,7 +15,10 @@ const config = {
   favicon: 'img/favicon.png',
   organizationName: 'ThingsIXFoundation', // Usually your GitHub org/user name.
   projectName: 'docs', // Usually your repo name.
-
+  markdown: {
+    mermaid: true
+  },
+  themes: ['@docusaurus/theme-mermaid'],
   presets: [
     [
       'classic',
