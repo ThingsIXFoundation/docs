@@ -10,6 +10,10 @@ can forwarder packets from your LoRa radio to multiple networks at the same time
 - Running [gwmp-mux](https://github.com/ThingsIXFoundation/gwmp-mux) on the gateway itself
 - Running [chirpstack-packet-multiplexer](https://github.com/brocaar/chirpstack-packet-multiplexer) on a server for multiple gateways.
 
+:::tip Help needed?
+Head over to the [ThingsIX Discord](https://discord.gg/y93x9M7UCq) to get community support.
+:::
+
 ## gwmp-mux
 [gwmp-mux](https://github.com/ThingsIXFoundation/gwmp-mux) is a simple application that forwards Semtech UDP packets to multiple endpoints on the same gateway.
 

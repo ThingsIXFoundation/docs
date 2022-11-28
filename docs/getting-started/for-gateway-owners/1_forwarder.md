@@ -20,6 +20,10 @@ supports [Semtech's UDP protocol](https://github.com/Lora-net/packet_forwarder/b
 Therefore your gateway will need to support it or you will need to use a bridge 
 that converts from your gateways protocol to Semtech's UDP protocol.
 
+:::tip Help needed?
+Head over to the [ThingsIX Discord](https://discord.gg/y93x9M7UCq) to get community support.
+:::
+
 ##  Where to install the forwarder?
 The first thing to decide is where to install the ThingsIX forwarder. You can run it on
 the gateway or on a server. What the best solution is depends on your personal
