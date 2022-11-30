@@ -77,7 +77,7 @@ docker run --rm --name thingsix-forwarder \
   -v /etc/thingsix-forwarder:/etc/thingsix-forwarder \
   ghcr.io/thingsixfoundation/packet-handling/forwarder:${version}
 ```
-(replace `${version}` with the latest [release](https://github.com/ThingsIXFoundation/packet-handling/releases), for example: `v1.0.0`)
+(replace `${version}` with the latest [release](https://github.com/ThingsIXFoundation/packet-handling/releases), for example: `1.0.0`, note: no 'v' prefix should be used).
 
 This example assumes that the ThingsIX forwarder listens on UDP port 1680. Make sure to open it in any firewalls and make sure to connect your gateways to it.
 
@@ -158,7 +158,7 @@ container.
 
 Replace `${version}` with the latest image version that can be found 
 [here](https://github.com/ThingsIXFoundation/packet-handling/releases) 
-(for example v1.0.0).
+(for example 1.0.0, note: no 'v' prefix should be used).
 
 ```bash
 $ docker run --rm --name thingsix-forwarder \
