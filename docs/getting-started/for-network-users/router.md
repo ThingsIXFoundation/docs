@@ -20,7 +20,7 @@ Currently only Chirpstack is v4 is supported. Please let us know if you are look
 
 Create a directory to hold the configuration:
 ```bash
-mkdir /etc/thingix-router/
+mkdir /etc/thingsix-router/
 ```
 
 Generate a key for the router (in this example we are creating a key for eu868):
@@ -100,4 +100,4 @@ docker logs router-eu868
 
 ## Adding router in ThingsIX forwarder registry
 
-Now contact ThingsIX Foundation (`info@thingix.com`) with your the hostname of your router, the NetID/DevAddr-prefix and frequency-plan and an address of the wallet that will pay for the airtime in the future (the owner). Please note that we will verify if you are allowed to use the NetID.
+Now contact ThingsIX Foundation (`info@thingsix.com`) with your the hostname of your router, the NetID/DevAddr-prefix and frequency-plan and an address of the wallet that will pay for the airtime in the future (the owner). Please note that we will verify if you are allowed to use the NetID.
