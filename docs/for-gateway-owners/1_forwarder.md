@@ -72,8 +72,9 @@ mkdir -p /etc/thingsix-forwarder
 
 Start the ThingsIX forwarder:
 ```bash
-docker run --rm --name thingsix-forwarder \
+docker run -d --name thingsix-forwarder \
   -p 1680:1680/udp \
+  --restart unless-stopped \
   -v /etc/thingsix-forwarder:/etc/thingsix-forwarder \
   ghcr.io/thingsixfoundation/packet-handling/forwarder:${version}
 ```
@@ -81,26 +82,19 @@ docker run --rm --name thingsix-forwarder \
 
 This example assumes that the ThingsIX forwarder listens on UDP port 1680. Make sure to open it in any firewalls and make sure to connect your gateways to it.
 
-Wait a few minutes for ThingsIX forwarder to collect gateway EUIs: You should see a line like containing the EUI of the gateway(s) you connected:
+Wait a few minutes for ThingsIX forwarder to collect gateway EUIs: You should see a line like containing the EUI of the gateway(s) you connected if you run:
+```bash
+docker logs thingsix-forwarder
+``` 
+Like:
 ```bash
 time="2022-11-24T13:42:39Z" level=info msg="unknown gateway recorded" file=/etc/thingsix-forwarder/unknown_gateways.yaml gw_local_id=0016c001f1500812gw_local_id=0016c001f1500812
 ```
 
-Press Ctrl-C to stop the ThingsIX forwarder and import the gateways to the store:
+Now you can import the gateways
 
 ```bash
-docker run --rm \
-        -v /etc/thingsix-forwarder:/etc/thingsix-forwarder \
-        ghcr.io/thingsixfoundation/packet-handling/forwarder:${version} \
-        gateway import /etc/thingsix-forwarder/gateways.yaml 0 0x0 0x0 /etc/thingsix-forwarder/unknown_gateways.yaml
-```
-
-Now run the ThingsIX forwarder in detached mode and make sure it auto-starts when your server starts:
-```bash
-docker run -d --restart unless-stopped --name thingsix-forwarder \
-  -p 1680:1680/udp \
-  -v /etc/thingsix-forwarder:/etc/thingsix-forwarder \
-  ghcr.io/thingsixfoundation/packet-handling/forwarder:${version}
+docker exec thingsix-forwarder ./forwarder gateway import 0 0x0 0x0
 ```
 
 ## Detailed start
@@ -198,6 +192,7 @@ Start the forwarder and order it to use the custom configuration file:
 ```bash
 docker run -d --name thingsix-forwarder \
   -p 1680:1680/udp \
+  --restart unless-stopped \
   -v /etc/thingsix-forwarder:/etc/thingsix-forwarder \
   ghcr.io/thingsixfoundation/packet-handling/${version} \
   --config /etc/thingsix-forwarder/my-custom-config.yaml
