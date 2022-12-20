@@ -7,7 +7,7 @@ title: Setting up a Forwarder on a VPS
 
 
 :::caution Disclaimer
-Following this tutorial will cost you money as the VPS-provider will charge you for the resources used. 
+Following this tutorial will cost you money as the VPS-provider will charge you for the resources used after the credit has expired.
 :::
 
 The ThingsIX Forwarder can either run on the LoRa gateway itself (not supported by all gateways) or can be run on a virtual server in the cloud (often called a VPS) to support multiple LoRa gateways. In this tutorial we are going to set-up a ThingsIX Forwarder on a VPS to be used by one or more LoRa gateways.
