@@ -77,14 +77,6 @@ const config = {
         defaultMode: 'dark',
         disableSwitch: false,
       },
-      announcementBar: {
-        id: 'wip',
-        content:
-          'Warning: Work in progress. ThingsIX is in early stages of development and the documentation could be inaccurate or missing',
-        backgroundColor: '#bd0016',
-        textColor: '#ffffff',
-        isCloseable: false,
-      },
       navbar: {
         title: 'ThingsIX',
         logo: {
