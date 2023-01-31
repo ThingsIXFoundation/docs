@@ -33,13 +33,13 @@ Buying a ticket involves several steps that are explained in this section.
 
 #### Provide shipping address
 The first step in buying a ticket is to provide contact details, shipping 
-address and accept the terms and conditions. If you win these details are used 
-to ship the mapper to you. Because the ticket is administered on-chain and the 
-contact details and shipping details are stored in a database they need to be 
-linked. This is done by signing the provided information with the same account 
-as which the ticket will be bought. This cross correlation is used to associate 
-the ticket with the provided information. Therefore you will be asked to sign 
-the data.
+address and accept the [user agreement](/files/User_Agreement_for_ThingsIX_Mappers_for_Batch_2023-1.pdf). 
+If you win these details are used to ship the mapper to you. Because the ticket 
+is administered on-chain and the contact details and shipping details are stored
+in a database for privacy reasons they need to be linked. This is done by 
+signing the provided information with the same account as which the ticket will 
+be bought. This cross correlation is used to associate the ticket with the 
+provided information. Therefore you will be asked to sign the data.
 
 #### Grant withdraw
 Tickets can be bought with an ERC20 token. Unfortunately the 
