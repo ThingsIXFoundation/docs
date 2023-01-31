@@ -5,43 +5,37 @@ title: Mapper lottery
 
 # Mapper lottery
 To obtain a mapper users can participate in a lottery by buying a ticket with an 
-ERC20 token. After the ticket buy period closes and a cool down period passes, a
-random value can be requested by anyone from [ChainLinks VRF](https://chain.link/vrf) 
-Oracle through the lottery web app. Only the first request succeeds, other attempts 
-will fail. So don't worry when your transaction fails, someone else was faster.
-When the oracle accepts the request, it will respond with a random value after a
-while. This random value is used to perform the lottery draw that determines the
-winning tickets. This ensure that the ThingsIX foundation has no influence on
-the lottery results. Users that have a winning ticket will receive the mapper on
-the shipping address they provided when buying the ticket. Users that lost can 
-claim the tokens they paid for their ticket back.
+ERC20 token. After the ticket buy period closes a random value is used to
+calculate the results. The ThingsIX Foundation will publish the results and 
+users with winning tickets will receive a mapper. Users that didn't win can
+claim the tokens they paid for their tickets back.
 
-When the foundation has a batch of mappers available, it will create and 
-announce a lottery. Mappers only support a single frequency plan and all mappers
-in a lottery have the same frequency plan. Users that want to obtain a mapper 
-will need to ensure that they participate **only** in lotteries with mappers 
-that support the frequency plan the user is interested in. Otherwise, they will 
-receive a mapper for a different frequency plan that cannot be used locally.
+When the Foundation has a batch of mappers available it will announce a lottery. 
+Mappers only support a single frequency plan and all mappers in a lottery use
+the same frequency plan. Users that want to obtain a mapper need to ensure that 
+they participate _**only**_ in lotteries with mappers that support the frequency 
+plan the user is interested in.
 
 :::info
-Mappers cannot be bought from the ThingsIX foundation, only won in a lottery. 
-Mappers always remain a property of the ThingsIX foundation. 
+Mappers cannot be bought from the ThingsIX Foundation, only allocated in a 
+lottery. Mappers always remain a property of the ThingsIX Foundation. 
 :::
 
-### Ticket buying process
+# Ticket buying process
 Buying a ticket involves several steps that are explained in this section.
 
-#### Provide shipping address
+## Provide shipping address
 The first step in buying a ticket is to provide contact details, shipping 
 address and accept the [user agreement](/files/User_Agreement_for_ThingsIX_Mappers_for_Batch_2023-1.pdf). 
-If you win these details are used to ship the mapper to you. Because the ticket 
+If you win, these details are used to ship the mapper to you. Because the ticket 
 is administered on-chain and the contact details and shipping details are stored
 in a database for privacy reasons they need to be linked. This is done by 
 signing the provided information with the same account as which the ticket will 
 be bought. This cross correlation is used to associate the ticket with the 
-provided information. Therefore you will be asked to sign the data.
+provided information. Therefore you will be asked to sign the data when 
+submitting your details.
 
-#### Grant withdraw
+## Grant withdraw
 Tickets can be bought with an ERC20 token. Unfortunately the 
 [ERC20 specification](https://eips.ethereum.org/EIPS/eip-20) is limited in its
 functionality and lacks support to add extra data to a transfer. The result is
@@ -55,17 +49,17 @@ can buy the ticket, he will need to grant the lottery contract an allowance to
 transfer tokens for 1 ticket from the ERC20 token contract on the user's behalf.
 This is done with `ERC20.approve`.
 
-#### Buy ticket
+## Buy ticket
 The last step is to buy the ticket. Each address can buy 1 ticket. The lottery
 contract will perform various checks and if all checks pass it will make the 
 withdraw and create a new ticket that is assigned to the user.
 
-### Request draw random value
+## Request draw random value
 After the ticket buy period passes, there is a cooldown period in which the 
 lottery is freezed. After this cooldown period passes anyone can request a 
 random value through the dashboard that is used for the lottery draw. This 
 random value is retrieved from the [ChainLinks VRF](https://chain.link/vrf) 
-Oracle. This is an independant source of random data and the ThingsIX foundation 
+Oracle. This is an independant source of random data and the ThingsIX Foundation 
 has no relation with Chainlink apart from a subscription that pays for their 
 service. This guarantees that the ThingsIX Foundation can't influence the 
 lottery results.
@@ -81,14 +75,19 @@ lottery smart contract. This will take some time. Once the lottery received the
 random value it will store it on-chain and associates it with the lottery. The
 dashboard will also show this random value once it's available.
 
-### Offline draw
+## Offline draw
 With the random value available the ThingsIX Foundation will determine the 
 results. It uses an open source tool that can be found 
 [here](https://github.com/ThingsIXFoundation/mapper-lottery). The algorithm to
-perform the draw can be found [here](https://github.com/ThingsIXFoundation/mapper-lottery/blob/main/draw/draw.go). With this tool it is possible to determine the results yourself and verify that the ThingsIX 
-Foundation published the results correct.
+perform the draw can be found [here](https://github.com/ThingsIXFoundation/mapper-lottery/blob/main/draw/draw.go). 
+The summary of this algorithm is that for each sold ticket a number is
+calculated based on the buyers wallet address, the ticket number and the lottery
+random value. The tickets are sorted by this number and the first
+`available mappers` tickets will win. With this tool it is possible to calculate
+the results yourself and verify that the ThingsIX Foundation published the 
+correct results.
 
-### View results
+## View results
 Once the ThingsIX Foundation has published the results the dashboard will show
 an indication if you won or lost in the lottery. If you lost, you are given the
 ability to claim the tokens you paid for your ticket back. If you won, you will
@@ -124,7 +123,7 @@ $ ./mapper-lottery --lottery-contract <lottery-contract-address> --rpc-endpoint 
 In this example there are 2 lotteries. The first is still running and the second 
 lottery is finished and the results are available. Lets check which tickets won 
 and which tickets not for lottery `2`. We also provide the `--verify` flag. 
-With this flag the tool will check for ~20% random tickets the locally 
+With this flag the tool will compare for ~20% random tickets the locally 
 calculated results with the results stored in the lottery draw. If it finds a 
 deviation it will print a warning with the ticket and lottery number for which 
 the result doesn't match.
