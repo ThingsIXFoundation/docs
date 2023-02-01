@@ -123,8 +123,8 @@ second lottery has finished and the results are available. Let's check which
 tickets won and which tickets lost for lottery `2`. We will also provide the
 `--verify` flag. With this flag, the tool will compare the locally calculated
 results with the results stored in the lottery draw for approximately 20% of the
-random tickets. If it finds a deviation, it will print a warning with the ticket
-and lottery number for which the result doesn't match.
+tickets, selected randomly. If it finds a deviation, it will print a warning with
+the ticket and lottery number for which the result doesn't match.
 
 ```bash
 $ ./mapper-lottery --lottery-contract <lottery-contract-address> --rpc-endpoint <rpc-endpoint> tickets 2 --verify
