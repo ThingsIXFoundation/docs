@@ -9,6 +9,7 @@ title: Smart contracts
 |---|---|
 | THIXM | [0xA68f199c095a6e675f462DE92012F673842C636f](https://polygonscan.com/token/0xa68f199c095a6e675f462de92012f673842c636f) |
 | RouterRegistry | [0xd6bcc904C2B312f9a3893d9D2f5f2b6b0e86f9a1](https://polygonscan.com/address/0xd6bcc904C2B312f9a3893d9D2f5f2b6b0e86f9a1) |
+| MapperLottery | [0x56A3bC7a559b79dE0701077607964f647aE3cbC0](https://polygonscan.com/address/0x56A3bC7a559b79dE0701077607964f647aE3cbC0) |
 
 # Public testnet (Polygon Mumbai)
 | Contract  | Address  |
