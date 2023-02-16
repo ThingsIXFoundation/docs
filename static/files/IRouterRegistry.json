@@ -1,0 +1,275 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      }
+    ],
+    "name": "RouterRegistered",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      }
+    ],
+    "name": "RouterRemoved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      }
+    ],
+    "name": "RouterUpdated",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint24",
+        "name": "netid",
+        "type": "uint24"
+      },
+      {
+        "internalType": "uint32",
+        "name": "prefix",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint8",
+        "name": "mask",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "frequencyPlan",
+        "type": "uint8"
+      },
+      {
+        "internalType": "string",
+        "name": "endpoint",
+        "type": "string"
+      }
+    ],
+    "name": "register",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "name": "remove",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "routerCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      }
+    ],
+    "name": "routers",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "id",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "uint24",
+            "name": "netid",
+            "type": "uint24"
+          },
+          {
+            "internalType": "uint32",
+            "name": "prefix",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint8",
+            "name": "mask",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "frequencyPlan",
+            "type": "uint8"
+          },
+          {
+            "internalType": "string",
+            "name": "endpoint",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct IRouterRegistry.Router",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "end",
+        "type": "uint256"
+      }
+    ],
+    "name": "routersPaged",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "id",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "uint24",
+            "name": "netid",
+            "type": "uint24"
+          },
+          {
+            "internalType": "uint32",
+            "name": "prefix",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint8",
+            "name": "mask",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "frequencyPlan",
+            "type": "uint8"
+          },
+          {
+            "internalType": "string",
+            "name": "endpoint",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct IRouterRegistry.Router[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint24",
+        "name": "netid",
+        "type": "uint24"
+      },
+      {
+        "internalType": "uint32",
+        "name": "prefix",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint8",
+        "name": "mask",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "frequencyPlan",
+        "type": "uint8"
+      },
+      {
+        "internalType": "string",
+        "name": "endpoint",
+        "type": "string"
+      }
+    ],
+    "name": "update",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
