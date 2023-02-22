@@ -39,6 +39,7 @@ Polygon mumbai, chain id `80001`.
 | GatewayOnboardingPlainBatch | [0x1095A1d113d71A0397F9a11eFBb8553B5424F06F](https://mumbai.polygonscan.com/address/0x1095A1d113d71A0397F9a11eFBb8553B5424F06F) | [ABI](/files/IGatewayOnboardingPlainBatch.json) |
 | GatewayPlainUpdater | [0xdE663ed2bF0080C3B513f948FC2b4483D597E280](https://mumbai.polygonscan.com/address/0xdE663ed2bF0080C3B513f948FC2b4483D597E280) | [ABI](/files/IGatewayUpdaterPlain.json) |
 | GatewayTransferrer | [0x5d54Cefe3a8BA79bfda737b2DA8981008120a86A](https://mumbai.polygonscan.com/address/0x5d54Cefe3a8BA79bfda737b2DA8981008120a86A) | [ABI](/files/IPlainGatewayTransferrer.json) |
+| MapperRegistry | [0x6487c5C5B8b40F5d289DDD1296576Ae1AdF63f02](https://mumbai.polygonscan.com/address/0x6487c5C5B8b40F5d289DDD1296576Ae1AdF63f02) | [ABI](/files/IMapperRegistry.json) |
 
 </TabItem>
 </Tabs>
