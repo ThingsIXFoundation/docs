@@ -96,7 +96,7 @@ to the address provided during the ticket-buying process.
 First compile the tool with the instructions in the [repository](https://github.com/ThingsIXFoundation/mapper-lottery).
 
 You will need to provide the lottery contract address that can be found
-[here](background/smart-contracts/overview.md). In addition, you will need to provide an
+[here](/developer-documentation/smart-contracts/Contracts.md). In addition, you will need to provide an
 RPC endpoint to a Polygon RPC node. Polygon offers a free-to-use endpoint on
 `https://polygon-rpc.com`, but we have found that it does not always work.
 Chainlist also offers a [list](https://chainlist.org/?search=polygon) of

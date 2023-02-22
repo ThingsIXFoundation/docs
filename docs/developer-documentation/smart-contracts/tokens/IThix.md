@@ -145,6 +145,126 @@ to learn more about how these ids are created.
 
 This function call must use less than 30 000 gas._
 
+### totalRewardsPaid
+
+```solidity
+function totalRewardsPaid(address account) external view returns (uint256)
+```
+
+total amount of THIX token rewards that are paid to `account`
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| account | address | users address |
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | amount of tokens that are already minted for the user |
+### payRewards
+
+```solidity
+function payRewards(address to, uint256 amount) external
+```
+
+pay `amount` of tokens rewards to `to`. On success the ERC20
+Transfer event is raised with the from set to the zero account.
+
+_only whitelisted accounts can call this function._
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| to | address | account to pay the minted tokens to |
+| amount | uint256 | amount of tokens to mint |
+
+### payRewardsAndCall
+
+```solidity
+function payRewardsAndCall(address to, uint256 amount) external
+```
+
+pay `amount` of tokens rewards to `to` and call the onTransferReceived
+callback on received with the from address set to the zero adress. On 
+success the ERC20 Transfer event is raised with the from set to the zero
+account.
+
+_only whitelisted accounts can call this function._
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| to | address | account to pay the minted tokens to |
+| amount | uint256 | amount of tokens to mint |
+
+### payRewardsAndCall
+
+```solidity
+function payRewardsAndCall(address to, uint256 amount, bytes data) external
+```
+
+pay `amount` of tokens rewards to `to` and call the onTransferReceived
+callback on received with the from address set to the zero adress. On 
+success the ERC20 Transfer event is raised with the from set to the zero
+account.
+
+_only whitelisted accounts can call this function._
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| to | address | account to pay the minted tokens to |
+| amount | uint256 | amount of tokens to mint |
+| data | bytes | data passed when the onTransferReceived is called |
+
+### burnDelegated
+
+```solidity
+function burnDelegated(address from, uint256 amount) external
+```
+
+burn `amount` of tokens in `from` wallet. On success the ERC20
+Transfer event is raised with the to set to the zero address.
+
+_only whitelisted accounts can call this function._
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| from | address | account to burn the tokens from |
+| amount | uint256 | tokens to burn |
+
+### name
+
+```solidity
+function name() external view returns (string)
+```
+
+_Returns the name of the token._
+
+### symbol
+
+```solidity
+function symbol() external view returns (string)
+```
+
+_Returns the symbol of the token._
+
+### decimals
+
+```solidity
+function decimals() external view returns (uint8)
+```
+
+_Returns the decimals places of the token._
+
 ### totalSupply
 
 ```solidity
@@ -217,61 +337,6 @@ allowance.
 Returns a boolean value indicating whether the operation succeeded.
 
 Emits a {Transfer} event._
-
-### payRewards
-
-```solidity
-function payRewards(address to, uint256 amount) external
-```
-
-pay `amount` of tokens rewards to `to`. On success the ERC20
-Transfer event is raised with the from set to the zero account.
-
-_only whitelisted accounts can call this function._
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| to | address | account to pay the minted tokens to |
-| amount | uint256 | amount of tokens to mint |
-
-### totalRewardsPaid
-
-```solidity
-function totalRewardsPaid(address account) external view returns (uint256)
-```
-
-total amount of THIX token rewards that are paid to `account`
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| account | address | users address |
-
-#### Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | amount of tokens that are already minted for the user |
-### burnDelegated
-
-```solidity
-function burnDelegated(address from, uint256 amount) external
-```
-
-burn `amount` of tokens in `from` wallet. On success the ERC20
-Transfer event is raised with the to set to the zero address.
-
-_only whitelisted accounts can call this function._
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| from | address | account to burn the tokens from |
-| amount | uint256 | tokens to burn |
 
 ## Events
 
