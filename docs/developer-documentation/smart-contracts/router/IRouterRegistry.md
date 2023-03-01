@@ -53,35 +53,6 @@ Batch of routers.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | struct IRouterRegistry.Router[] | batch of routers in the given range |
-### update
-
-```solidity
-function update(bytes32 id, address owner, uint24 netid, uint32 prefix, uint8 mask, uint8 frequencyPlan, string endpoint) external
-```
-
-update router identifier by the given id with the given details
-
-_can only be called from whitelisted accounts_
-
-### remove
-
-```solidity
-function remove(bytes32 id, address owner) external
-```
-
-remover router or revert when the router is not registered
-
-_can only be called from whitelisted accounts_
-
-### register
-
-```solidity
-function register(bytes32 id, address owner, uint24 netid, uint32 prefix, uint8 mask, uint8 frequencyPlan, string endpoint) external
-```
-
-register router or revert when the router is already registered
-
-_can only be called from whitelisted accounts_
 
 ## Events
 

@@ -3,17 +3,6 @@ title: Gateway Onboarding Plain
 ---
 # Gateway Onboarding Plain
  Onboard a gateway by signing an onboard message.
- To onboard a gateway the owner will need to pay a fee. This fee is set 
- in EUR but paid with THIX. The THIX/EUR exchange rate is updated periodically. 
- Therefore there is a change the exchange rate changed between the moment the 
- user calculates the amount of THIX to pay for the onboard fee and the moment 
- the transaction is processed on chain. If the THIX/EUR exchange rate changed 
- significantly this can cause the transaction to be reverted because the user 
- doesn&#x27;t have enough THIX tokens, or if the has he can pay much more THIX than
- he was willing to do. Therefore the &#x60;maxFee&#x60; parameter is added. This gives 
- the caller the option to specify the max amount of THIX tokens he is willing
- to spend to perform the operation. If the operation costs less than &#x60;maxFee&#x60;
- the remainder remains in the wallet of the user.
 
 ## Functions
 
@@ -55,7 +44,20 @@ process to verify the owners signatures.
 
 _on success the GatewayRegistry will raise the GatewayOnboarded
 event and the Thix token will raise the Transfer event with the to
-address set to the zero address (burn onboard fee)._
+address set to the zero address (burn onboard fee). Use the value of the
+Transfer event to determine the onboard fee in THIX that was burned.
+The fee is paid in THIX but set in EUR. Therefore an exchange rate is
+used to calculate the amount of THIX to burn to pay for the onboard fee.
+This exchange rate is updated periodically. Therefore it is possible
+that this exchange rate changed between the moment the transaction was 
+sent and processed and will fail. If the exchange rate decreased the 
+amount of tokens required to update the gateway is higher than the moment
+the transaction was sent. With `maxFee` the user can specify the max 
+amount of tokens he is willing to burn to onboard the gateway. E.g. if 
+the user is willing to burn 10% more tokens to onboard the gateway than 
+the existing fee he can specify `maxFee` as 1.10 * updateFeeInThix(). 
+Only the amount of tokens to burn is burned from the users wallet. 
+Excesses tokens specified in `maxFee` are untouched._
 
 #### Parameters
 

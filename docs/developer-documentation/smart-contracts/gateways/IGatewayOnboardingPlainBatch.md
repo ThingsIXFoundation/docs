@@ -3,17 +3,6 @@ title: Gateway Onboarding Plain Batch
 ---
 # Gateway Onboarding Plain Batch
  Onboard a batch of gateway by signing onboard messages.
- To onboard a gateway the owner will need to pay a fee. This fee is set in EUR
- but paid with THIX. The THIX/EUR exchange rate is updated periodically. 
- Therefore there is a change the exchange rate changed between the moment the 
- user calculates the amount of THIX to pay for the onboard fee and the moment 
- the transaction is processed on chain. If the THIX/EUR exchange rate changed 
- significantly this can cause the transaction to be reverted because the user 
- doesn&#x27;t have enough THIX tokens, or if the has he can pay much more THIX than
- he was willing to do. Therefore the &#x60;maxFee&#x60; parameter is added. This gives 
- the caller the option to specify the max amount of THIX tokens he is willing
- to spend to perform the operation. If the operation costs less than &#x60;maxFee&#x60;
- the remainder remains in the wallet of the user.
 
 ## Functions
 

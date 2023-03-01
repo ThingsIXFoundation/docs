@@ -39,67 +39,6 @@
     "type": "event"
   },
   {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "id",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "internalType": "uint24",
-        "name": "netid",
-        "type": "uint24"
-      },
-      {
-        "internalType": "uint32",
-        "name": "prefix",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint8",
-        "name": "mask",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "frequencyPlan",
-        "type": "uint8"
-      },
-      {
-        "internalType": "string",
-        "name": "endpoint",
-        "type": "string"
-      }
-    ],
-    "name": "register",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "id",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      }
-    ],
-    "name": "remove",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "routerCount",
     "outputs": [
@@ -227,49 +166,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "id",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "internalType": "uint24",
-        "name": "netid",
-        "type": "uint24"
-      },
-      {
-        "internalType": "uint32",
-        "name": "prefix",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint8",
-        "name": "mask",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "frequencyPlan",
-        "type": "uint8"
-      },
-      {
-        "internalType": "string",
-        "name": "endpoint",
-        "type": "string"
-      }
-    ],
-    "name": "update",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

@@ -1,82 +1,82 @@
 [
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "maxFee",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "updateFee",
-          "type": "uint256"
-        }
-      ],
-      "name": "MaxFeeTooLowErr",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "bytes32",
-          "name": "gatewayId",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "uint8",
-          "name": "antennaGain",
-          "type": "uint8"
-        },
-        {
-          "internalType": "uint8",
-          "name": "frequencyPlan",
-          "type": "uint8"
-        },
-        {
-          "internalType": "int64",
-          "name": "location",
-          "type": "int64"
-        },
-        {
-          "internalType": "uint8",
-          "name": "altitude",
-          "type": "uint8"
-        },
-        {
-          "internalType": "uint256",
-          "name": "maxFee",
-          "type": "uint256"
-        }
-      ],
-      "name": "update",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "updateFeeInEUR",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "updateFeeInTHIX",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    }
-  ]
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "maxFee",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "updateFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "MaxFeeTooLowErr",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "gatewayId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint8",
+        "name": "antennaGain",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "frequencyPlan",
+        "type": "uint8"
+      },
+      {
+        "internalType": "int64",
+        "name": "location",
+        "type": "int64"
+      },
+      {
+        "internalType": "uint8",
+        "name": "altitude",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "update",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "updateFeeInEUR",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "updateFeeInTHIX",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
