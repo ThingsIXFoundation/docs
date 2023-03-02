@@ -63,7 +63,7 @@ Excesses tokens specified in `maxFee` are untouched._
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| version | uint8 | gateway onboard version |
+| version | uint8 | gateway onboard version (hard-coded to 0 in the ThingsIX Forwarder) |
 | gatewayId | bytes32 | gateway unique identifier |
 | gateway | address | gateway EVM address |
 | gatewaySignature | bytes | gateway signature over the onboard message |

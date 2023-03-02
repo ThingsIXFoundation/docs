@@ -50,7 +50,7 @@ with the to address set to the zero address (burn onboard fee)._
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| versions | uint8[] | gateway onboard versions |
+| versions | uint8[] | gateway onboard versions (hard-coded to 0 in the ThingsIX Forwarder) |
 | gatewayIds | bytes32[] | gateway unique identifiers |
 | gateways | address[] | gateway EVM addresses |
 | gatewaySignatures | bytes[] | gateway signature over the onboard messages |
