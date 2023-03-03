@@ -65,12 +65,14 @@ go build -ldflags="-s -w"
 This guide assumes the use of the docker image.
 
 ## Quick start
-Make sure the `/etc/thingsix-forwarder` folder exists on your system to store the configuration.:
+Make sure the `/etc/thingsix-forwarder` folder exists on your system to store
+the configuration and is writeable by the docker container:
+
 ```bash
 mkdir -p /etc/thingsix-forwarder
 ```
 
-Start the ThingsIX forwarder:
+Start the ThingsIX forwarder on mainnet:
 ```bash
 docker run -d --name thingsix-forwarder \
   -p 1680:1680/udp \
@@ -88,16 +90,50 @@ docker logs thingsix-forwarder
 ``` 
 Like:
 ```bash
-time="2022-11-24T13:42:39Z" level=info msg="unknown gateway recorded" file=/etc/thingsix-forwarder/unknown_gateways.yaml gw_local_id=0016c001f1500812gw_local_id=0016c001f1500812
+time="2022-11-24T13:42:39Z" level=info msg="unknown gateway recorded" file=/etc/thingsix-forwarder/unknown_gateways.yaml gw_local_id=0016c001f1500812
 ```
-
-Now you can import the gateways
+With the default configuration the forwarder will write recorded unknown
+gateway id's to `/etc/thingsix-forwarder/unknown_gateways.yaml`.
 
 ```bash
-docker exec thingsix-forwarder ./forwarder gateway import <your-address> 1
+cat /etc/thingsix-forwarder/unknown_gateways.yaml
+- local_id: 0016c001f1500812
+  first_seen: 1677672688
 ```
 
-Please note: currently (until full main-net lauch using ERC20-tokens approx. Q2 2023) the owner address used does not matter. However it can not be left empty.
+Now you can import the gateways:
+
+```bash
+docker exec thingsix-forwarder ./forwarder gateway import <owner>
+```
+
+`owner` is the wallet address of the gateway owner. This will be the address
+that onboards the gateway in ThingsIX.
+
+Example:
+```bash
+docker exec thingsix-forwarder ./forwarder gateway import 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 2>/dev/null
++---+--------------------------------------------------------------------+------------------+--------------------------------------------+---------+--------------------------------------------------------------------------------------------------------------------------------------+
+|   |                             GATEWAY ID                             |     LOCAL ID     |                   OWNER                    | VERSION |                                                      GATEWAY ONBOARD SIGNATURE                                                       |
++---+--------------------------------------------------------------------+------------------+--------------------------------------------+---------+--------------------------------------------------------------------------------------------------------------------------------------+
+| 1 | 0x773280c5465df7068c419b90bd045354e8c5c597793e463d33608875e3ac0048 | 0016c001f1500812 | 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 |       0 | 0x67aef5c17b09f8f37567c551f9d3fb870e5f9c67e883316021b6540f33722b6d4f7d8f4fe9d8fa1ac7c1eb66fbe1512566b556e94453bbc1474067bc013a5cc01b |
++---+--------------------------------------------------------------------+------------------+--------------------------------------------+---------+--------------------------------------------------------------------------------------------------------------------------------------+
+```
+
+For every recorded gateway the forwarder generates an identity and stores it 
+with the gateways local id in the gateway store. It dumps a table with all
+information that is required to onboard the gateway in ThingsIX. Make a copy of
+the table because you will need this information when onboarding the gateway.
+
+It is safe to run this command multiple times. Gateways that are already
+imported will be ignored.
+
+:::info
+After the gateways are imported in the forwarders gateway store their identity
+is stored in `/etc/thingsix-forwarder/gateways.yaml`. Make a backup of this file
+since it contains the identity of your gateways. If you need to reinstall the
+forwarder you can copy this file back to the same location.
+:::
 
 ## Detailed start
 
@@ -144,7 +180,7 @@ and with a [restart](https://docs.docker.com/engine/reference/run/#restart-polic
 policy. The forwarder opens an endpoint on port `1680/udp` for gateways to 
 connect to. This port must be published. The forwarder uses 
 `/etc/thingsix-forwarder` as default location where to load and store data.
-Therefore we mount the local directory `/etc/thingsix-forwarder/` into the
+Therefore we mount the local directory `/etc/thingsix-forwarder` into the
 container.
 
 Replace `${version}` with the latest image version that can be found 
@@ -157,6 +193,10 @@ docker run -d --name thingsix-forwarder \
   -v /etc/thingsix-forwarder:/etc/thingsix-forwarder \
   ghcr.io/thingsixfoundation/packet-handling/forwarder:${version}
 ```
+
+If you want to start the forwarder with default configuration on another network
+just append `--net=<network>` to the command with network one of `dev`, `test`
+or `main`. The default is `main`.
 
 Now check the logs:
 ```bash
@@ -236,20 +276,22 @@ required.
 Now its time to add your gateway into the forwarders gateway store. You have 2
 methods:
 1. add a single gateway
-2. import a set of gateways at once
+2. import recorded unknown gateways all at once
 
 #### Add single gateway
-This sub command expects the gateway ID (gateway EUI) as argument
+Add the gateway to the forwarder and generate the onboard message that is
+required when onboarding the gateway in ThingsIX.
 ```bash
-docker exec thingsix-forwarder ./forwarder gateway add 0016c001f1500812
+docker exec thingsix-forwarder ./forwarder gateway onboard 0016c001f1500812 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 2> /dev/null
 ```
+
 Output:
 ```bash
-+---+------------------------------------------------------------------+------------------+------------------+
-|   |                           THINGSIX ID                            |     LOCAL ID     |    NETWORK ID    |
-+---+------------------------------------------------------------------+------------------+------------------+
-| 1 | d418d9c7d88f582c9caadf55c50e31b787056e185d179795b3621fe90049c39c | 0016c001f1500812 | 82f25fa0a61dcd0e |
-+---+------------------------------------------------------------------+------------------+------------------+
++---+------------------------------------------------------------------+------------------+------------------+-------+---------+--------------+----------+----------+
+|   |                           THINGSIX ID                            |     LOCAL ID     |    NETWORK ID    | OWNER | VERSION | ANTENNA GAIN | LOCATION | ALTITUDE |
++---+------------------------------------------------------------------+------------------+------------------+-------+---------+--------------+----------+----------+
+| 1 | 4bcbcefa9c366c5752dfaca183233ce4ee32507976fc0a90f8659919c18cf20b | 0016c001f1500812 | f7165c83376b6562 |       |         |              |          |          |
++---+------------------------------------------------------------------+------------------+------------------+-------+---------+--------------+----------+----------+
 ```
 
 If the gateway was added you will see 3 id's:
@@ -270,30 +312,29 @@ cat /etc/thingsix-forwarder/gateways.yaml
 Output:
 ```bash
 - local_id: 0016c001f1500812
-  private_key: 4f97538eda76d6e65779e655f407c6c05a44512508bc34a47f64f163b161d03d
+  private_key: 82f8285f735fac86859ef590ec7109380b5406e2c5a8b3036a79262df1455824
 ```
 
 #### Batch import gateways
 Another method is to batch import a list of recorded gateways. Adding gateways
-one by one becomes quickly a tedious job. The forwarder supports batch imports.
-Gateways that are already in the store are ignored so its safe to run this
-command multiple times.
+one by one becomes quickly a tedious job. The forwarder and the ThingsIX
+dashboard support batch imports. Gateways that are already in the store are 
+ignored so its safe to run this command multiple times.
 
-This sub command is already prepared to support on-boarding gateways in ThingsIX.
-Therefore it expects more arguments than when adding a single gateway. For now
-you can use dummy values. Once done it prints an JSON array that can be used to 
-onboard the gateways through the ThingIX dashboard. Since that isn't required it
-can be ignored.
+The gateway import command accepts the owners wallet address.
+
+The forwarder will dump a json message that is required in the dashboard to
+onboard all gateways at once.
 
 ```bash
-docker exec thingsix-forwarder ./forwarder gateway import 0 0x0 0x0
+docker exec thingsix-forwarder ./forwarder gateway import 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 2>/dev/null
 ```
+
 Output:
-```bash
-time="2022-11-24T13:49:41Z" level=info msg="imported gateway 0016c001f1500812"
-time="2022-11-24T13:49:41Z" level=info msg="imported 1 gateways, don't forget to onboard these"
-[{"gateway_id":"0x144542caeacd9bf9f01bac258adc1ba6ec22e49bf3f0a70d5f7b37c10cb16b03","version":1,"local_id":"0016c001f1500812","network_id":"4d7a325d4e0ee7d3","address":"0xc90b57fe9ca972d21223dae9197549ce201aeacd","chain_id":0,"gateway_onboard_signature":"0x43b20c2c3ed0cb306fdd3eb13550dd4a3cc2af162d7157289f96adeb235bc2fd6eb8234cde8d0c620acd2edb917459990dc1417c4d8fa19570fc68e1bb0048521c"}]
+```bash        
+[{"owner":"0x782123189312aa15c2c50a87f7fe737de38f3569","address":"0x4b9c21e41993b744bc9d42fa9bf95ec6e7d0ab52","chainId":80001,"gatewayId":"0x6324cc1948f59786cb821dd2183417c9eaafcd0dc685bb7cbaf8d1896c4e94f6","gatewayOnboardSignature":"0x516d64b246ce15f23549d5aa13159f578e44e706122fd2649025b117fd5738c01e0ed5a1ae3305e9c0412308e435e638e0ddb86c931d570367d76d97e467d7a41b","localId":"0016c001f1500812","networkId":"9275be1b7e8cc041","version":123,"onboarder":"0xa9f2f4f130541e32209ce04950b6978e8dd97043"}]
 ```
+
 And check that the gateway is added to the gateway store.
 ```bash
 cat /etc/thingsix-forwarder/gateways.yaml
@@ -315,7 +356,7 @@ Output:
 +---+------------------------------------------------------------------+------------------+------------------+
 |   |                           THINGSIX ID                            |     LOCAL ID     |    NETWORK ID    |
 +---+------------------------------------------------------------------+------------------+------------------+
-| 1 | 144542caeacd9bf9f01bac258adc1ba6ec22e49bf3f0a70d5f7b37c10cb16b03 | 0016c001f1500812 | 4d7a325d4e0ee7d3 |
+| 1 | 6324cc1948f59786cb821dd2183417c9eaafcd0dc685bb7cbaf8d1896c4e94f6 | 0016c001f1500812 | 9275be1b7e8cc041 |
 +---+------------------------------------------------------------------+------------------+------------------+
 ```
 
@@ -336,6 +377,49 @@ time="2022-11-24T13:53:30Z" level=info msg="gateway online" gw_local_id=0016c001
 ...
 time="2022-11-24T13:54:11Z" level=info msg="delivered packet" airtime="113.152µs" coderate=CR_4_5 dev_addr=00b00b1e ...
 ```
+
+### List gateways in store
+```bash
+docker exec thingsix-forwarder ./forwarder gateway list 2>/dev/null
+```
+
+Output
+```bash
++---+------------------------------------------------------------------+------------------+------------------+-------+---------+--------------+----------+----------+
+|   |                           THINGSIX ID                            |     LOCAL ID     |    NETWORK ID    | OWNER | VERSION | ANTENNA GAIN | LOCATION | ALTITUDE |
++---+------------------------------------------------------------------+------------------+------------------+-------+---------+--------------+----------+----------+
+| 1 | 43f69867ee7cac637f998f80b89928eb79a5c57b40c5fd2f73c4d8ea86efa180 | 0016c001f1500812 | 5b8c0be32c9e0a2c |       |         |              |          |          |
++---+------------------------------------------------------------------+------------------+------------------+-------+---------+--------------+----------+----------+
+```
+This command supports the `--json` flag. If given the output is printed as a
+json value.
+
+If the last columns are missing it means that the gateway hasn't been onboarded
+and/or its details are not set. If that has been done the forwarder may need to
+sync with ThingsIX. That will happen automatically but can take some time.
+
+### Create gateway onboard message
+Each gateway needs to be onboarded. This requires the gateway's identity that
+the forwarder manages in its store. To generate an onboard message for a gateway
+use the following command:
+
+```bash
+docker exec thingsix-forwarder ./forwarder gateway onboard 0016c001f1500812 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 2>/dev/null
+```
+
+The first argument is the gateways local id for which you want to generate an
+onboard message the last argument is the gateways owner wallet address. It is
+safe to run this command multiple times if needed.
+
+Output
+```bash
++---+--------------------------------------------------------------------+------------------+--------------------------------------------+---------+--------------------------------------------------------------------------------------------------------------------------------------+
+|   |                             GATEWAY ID                             |     LOCAL ID     |                   OWNER                    | VERSION |                                                      GATEWAY ONBOARD SIGNATURE                                                       |
++---+--------------------------------------------------------------------+------------------+--------------------------------------------+---------+--------------------------------------------------------------------------------------------------------------------------------------+
+| 1 | 0x43f69867ee7cac637f998f80b89928eb79a5c57b40c5fd2f73c4d8ea86efa180 | 0016c001f1500812 | 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 |       0 | 0xee2ab6038d1047ba5b4680e500bbf29b4f78ad5ba6dfd90a32ba5c192e811fab409c7a716dd404fb31423c2ee21e7dc7d162b0bc2e962718973fcc72f6a87f3f1b |
++---+--------------------------------------------------------------------+------------------+--------------------------------------------+---------+--------------------------------------------------------------------------------------------------------------------------------------+
+```
+You will need this information when onboarding the gateway.
 
 ### Backup and security of the gateway store
 Since the gateway store holds the private key for each gateway it is important

@@ -188,7 +188,7 @@ Make sure you recognize all the gateway-ids, also called 'gateway EUI'. (The id/
 
 You can import the gateways by running:
 ```bash
-docker exec thingsix-forwarder ./forwarder gateway import 0 0x0 0x0
+docker exec thingsix-forwarder ./forwarder gateway import 0x782123189312Aa15c2C50A87F7Fe737DE38f3569
 ```
 
 This should give an output like: 
