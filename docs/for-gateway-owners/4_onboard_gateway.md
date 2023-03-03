@@ -4,7 +4,7 @@ title: Register gateway in ThingsIX
 ---
 # Introduction
 Before a gateway is operational in ThingsIX it must be onboarded and its owner
-must set details such as antanna gain and location. The ThingsIX dashboard is 
+must set details such as antanna gain and location. The ThingsIX dashboard
 provides a method to perform these operations.
 
 Currently the testnet dashboard is available at https://app-testnet.thingsix.com.
@@ -37,10 +37,10 @@ wallet address is shown on the top right.
 ### THIX
 Next step is to obtain THIX tokens. ThingsIX offers a faucet on testnet that can
 be used to obtain some testnet THIX tokens. Navigate to the wallet page in the
-top menu. On the bottom of the page click on the `Generate rewards` button. Your
-wallet will ask you for your confirmation. After the transaction is processed 
-you will see THIX tokens in your wallet. You are now ready to start onboarding
-your gateways.
+top menu. On the bottom of the wallet page click on the `Generate rewards`
+button. Your wallet will ask you for your confirmation. After the transaction is
+processed  you will see THIX tokens in your wallet. You are now ready to start
+onboarding your gateways.
 
 ## Onboard gateway
 When adding your gateways to the ThingsIX forwarder you collected for each
@@ -58,7 +58,7 @@ onboard it can save time.
 Onboarding a gateway requires the user to pay a fee. This fee is set in EUR
 but paid with THIX tokens. With a THIX/EUR exchange rate the amount of THIX
 tokens are calculated. When the onboard is successful the THIX tokens that paid
-for the fee are burned.
+for the fee are burned and taken out of circulation.
 
 After you filled in the form with the values from the onboard message that you
 obtained from the forwarder the form will show the current fee. Because the
