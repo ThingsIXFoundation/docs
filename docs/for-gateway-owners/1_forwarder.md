@@ -135,7 +135,6 @@ since it contains the identity of your gateways. If you need to reinstall the
 forwarder you can copy this file back to the same location.
 :::
 
-
 ## Detailed start
 
 ### Configuration
