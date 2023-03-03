@@ -104,20 +104,19 @@ cat /etc/thingsix-forwarder/unknown_gateways.yaml
 Now you can import the gateways:
 
 ```bash
-docker exec thingsix-forwarder ./forwarder gateway import <owner> <version>
+docker exec thingsix-forwarder ./forwarder gateway import <owner>
 ```
 
 `owner` is the wallet address of the gateway owner. This will be the address
-that onboards the gateway in ThingsIX. `version` is a user choosen value in the
-range `0..255` (inclusive). ThingsIX will not use this value.
+that onboards the gateway in ThingsIX.
 
 Example:
 ```bash
-docker exec thingsix-forwarder ./forwarder gateway import 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 1 2>/dev/null
+docker exec thingsix-forwarder ./forwarder gateway import 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 2>/dev/null
 +---+--------------------------------------------------------------------+------------------+--------------------------------------------+---------+--------------------------------------------------------------------------------------------------------------------------------------+
 |   |                             GATEWAY ID                             |     LOCAL ID     |                   OWNER                    | VERSION |                                                      GATEWAY ONBOARD SIGNATURE                                                       |
 +---+--------------------------------------------------------------------+------------------+--------------------------------------------+---------+--------------------------------------------------------------------------------------------------------------------------------------+
-| 1 | 0x773280c5465df7068c419b90bd045354e8c5c597793e463d33608875e3ac0048 | 0016c001f1500812 | 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 |       1 | 0x67aef5c17b09f8f37567c551f9d3fb870e5f9c67e883316021b6540f33722b6d4f7d8f4fe9d8fa1ac7c1eb66fbe1512566b556e94453bbc1474067bc013a5cc01b |
+| 1 | 0x773280c5465df7068c419b90bd045354e8c5c597793e463d33608875e3ac0048 | 0016c001f1500812 | 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 |       0 | 0x67aef5c17b09f8f37567c551f9d3fb870e5f9c67e883316021b6540f33722b6d4f7d8f4fe9d8fa1ac7c1eb66fbe1512566b556e94453bbc1474067bc013a5cc01b |
 +---+--------------------------------------------------------------------+------------------+--------------------------------------------+---------+--------------------------------------------------------------------------------------------------------------------------------------+
 ```
 
@@ -284,7 +283,7 @@ methods:
 Add the gateway to the forwarder and generate the onboard message that is
 required when onboarding the gateway in ThingsIX.
 ```bash
-docker exec thingsix-forwarder ./forwarder gateway onboard 0016c001f1500812 1 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 2> /dev/null
+docker exec thingsix-forwarder ./forwarder gateway onboard 0016c001f1500812 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 2> /dev/null
 ```
 
 Output:
@@ -323,14 +322,13 @@ one by one becomes quickly a tedious job. The forwarder and the ThingsIX
 dashboard support batch imports. Gateways that are already in the store are 
 ignored so its safe to run this command multiple times.
 
-The gateway import command accepts the owners wallet address and a user choosen
-version number in the range [0..128). ThingsIX doesn't use this version.
+The gateway import command accepts the owners wallet address.
 
 The forwarder will dump a json message that is required in the dashboard to
 onboard all gateways at once.
 
 ```bash
-docker exec thingsix-forwarder ./forwarder gateway import 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 123 2>/dev/null
+docker exec thingsix-forwarder ./forwarder gateway import 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 2>/dev/null
 ```
 
 Output:
@@ -407,12 +405,11 @@ the forwarder manages in its store. To generate an onboard message for a gateway
 use the following command:
 
 ```bash
-docker exec thingsix-forwarder ./forwarder gateway onboard 0016c001f1500812 1 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 2>/dev/null
+docker exec thingsix-forwarder ./forwarder gateway onboard 0016c001f1500812 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 2>/dev/null
 ```
 
 The first argument is the gateways local id for which you want to generate an
-onboard message. The second argument is a user choosen number in the range 
-`[0..255]` and the last argument is the gateways owner wallet address. It is
+onboard message the last argument is the gateways owner wallet address. It is
 safe to run this command multiple times if needed.
 
 Output
