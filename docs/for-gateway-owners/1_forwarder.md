@@ -94,8 +94,10 @@ time="2022-11-24T13:42:39Z" level=info msg="unknown gateway recorded" file=/etc/
 Now you can import the gateways
 
 ```bash
-docker exec thingsix-forwarder ./forwarder gateway import 0 0x0 0x0
+docker exec thingsix-forwarder ./forwarder gateway import <your-address> 1
 ```
+
+Please note: currently (until full main-net lauch using ERC20-tokens approx. Q2 2023) the owner address used does not matter. However it can not be left empty.
 
 ## Detailed start
 
