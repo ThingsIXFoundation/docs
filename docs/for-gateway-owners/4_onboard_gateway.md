@@ -7,7 +7,10 @@ Before a gateway is operational in ThingsIX it must be onboarded and its owner
 must set details such as antanna gain and location. The ThingsIX dashboard
 provides a method to perform these operations.
 
-Currently the testnet dashboard is available at https://app-testnet.thingsix.com.
+:::info
+This guide uses the ThingsIX testnet. The ThingsIX testnet dashboard can be
+found here https://app-testnet.thingsix.com.
+:::
 
 ## Wallet requirements
 Before you can start registering your gateways and earn rewards you will need to
@@ -27,34 +30,53 @@ above stated requirements.
 ### Matics
 ThingsIX is build on the Polygon blockchain. Polygon uses the Matic token to pay
 for transaction fees. Polygon offers a [faucet](https://faucet.polygon.technology)
-that you can use to obtain some test Matics on their Mumbai testnet.
+on testnet that you can use to obtain some test MATICS. You will require MATICS
+to onboard and set gateway details and claim earned rewards.
 
 After obtaining testnet Matics it is time to connect your wallet in the
 dashboard. On the top right in the dashboard there is a button to connect your
 wallet. Select your wallet type and after the wallet connected successfully the
-wallet address is shown on the top right.
+wallet address is shown in the top right. If you are not on the Polygon testnet
+(Mumbai) your wallet will ask you to add and switch to the Mumbai network.
 
 ### THIX
 Next step is to obtain THIX tokens. ThingsIX offers a faucet on testnet that can
-be used to obtain some testnet THIX tokens. Navigate to the wallet page in the
-top menu. On the bottom of the wallet page click on the `Generate rewards`
-button. Your wallet will ask you for your confirmation. After the transaction is
-processed  you will see THIX tokens in your wallet. You are now ready to start
-onboarding your gateways.
+be used to obtain some testnet THIX tokens. Next to the wallet button in the
+top bar is the wallet widget. Click on this widget to open the wallet popup. On
+testnet there is a testnet faucet section that you can open and click on the
+generate button. ThingsIX will create a rewards cheque on the fly with testnet
+THIX tokens in the background. Once done you will be asked to sign a transaction
+that claims the just generated rewards cheque. Once processed the THIX tokens
+are added to your wallet. You are now ready to start onboarding your gateways.
+
+![THIX testnet faucet](/img/thix_faucet.png)
 
 ## Onboard gateway
-When adding your gateways to the ThingsIX forwarder you collected for each
-gateway an onboard message. You will require these now. Navigate to the onboard
-page through the menu with `Gateways` -> `Onboard`.
+Open in the top menu the Gateway -> Onboard page. When you created the gateway
+onboard message with the ThingsIX forwarder and opted to send the onboard
+message to ThingsIX you will be presented with a list of pending gateway onboard
+messages. From this list select the gateways that you want to onboard and click
+on the add button.
 
-![Gateway onboard form](/img/gateway_onboard_form.png)
+![Pending gateway onboards](/img/gateway_onboard_list.png)
 
-:::note
-On the top right there is a button that opens another gateway onboard form with
-support to onboard multiple gateways at once. If you have many gateways to 
-onboard it can save time.
-:::
+The dashboard will now prepare a gateway onboard transaction
+that you can submit with the onboard gateway button. You wallet will now ask
+for confirmation and once approved submits the gateway onboard transaction onto
+the network. Once processed your gateways are onboarded on ThingsIX into your
+personal wallet.
 
+If you opted not to send the onboard messages to ThingsIX you can paste the
+generated onboard message manually.
+
+After your gateway onboard transaction is processed you can go to the `Gateways`
+-> `Overview` page. You will now see a pending gateway onboard event. We require
+128 block confirmations before your onboard is accepted. During these 128 blocks
+your onboard transaction is considered pending.
+
+![Gateway onboard form](/img/gateway_pending_onboard.png)
+
+### Gateway onboard fee
 Onboarding a gateway requires the user to pay a fee. This fee is set in EUR
 but paid with THIX tokens. With a THIX/EUR exchange rate the amount of THIX
 tokens are calculated. When the onboard is successful the THIX tokens that paid
@@ -72,16 +94,6 @@ that you never pay more than max fee. If max fee is higher than the onboard fee
 at the moment the transaction is processed you will only pay for the current
 onboard fee.
 
-![Gateway onboard form](/img/gateway_onboard_form_fee.png)
-
-After you press the `Onboard` button your wallet will ask you to sign the
-onboard transaction. Once the transaction is processed navigate to the gateways
-overview page through the menu `Gateways` -> `Overview`. You will now see a
-pending gateway onboard event. We require 128 block confirmations before your
-onboard is accepted.
-
-![Gateway onboard form](/img/gateway_pending_onboard.png)
-
 After 128 blocks the onboard is confirmed and you will see the gateway listed in
 the `Onboarded gateways` list. You have now successfully onboarded your gateway.
 
@@ -90,11 +102,11 @@ The last step to do before your gateway is operational is to set its details.
 
 ![Gateway overview](/img/gateway_overview.png)
 
-Click on the button in the last column of the gateway. This will take you to the
-details page of the gateway. If the gateway is owned by the connected wallet the
-dashboard shows several buttons on the right. With the `edit` button you can set
-the details of the gateway and the `transfer` button allows you to send the
-gateway to a different wallet.
+Click on the `Details` button in the last column of the gateway. This will take
+you to the details page of the gateway. If the gateway is owned by the connected
+wallet the dashboard shows several buttons on the right. With the `edit` button
+you can set the details of the gateway and the `transfer` button allows you to
+send the gateway to a different wallet.
 
 Click on the `edit` button. A form opens that allows you to specify the gateway
 specific settings. The frequency plan is automatically derived from the location
