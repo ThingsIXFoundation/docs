@@ -126,10 +126,12 @@ Next we can actually start the ThingsIX forwarder as docker container. First go 
 
 Now think of a random number under the 10000 to be used as port-number for the ThingsIX forwarder (we are using 5652 here). This will be the port number where LoRa gateways will send the received packets. 
 
-Now run the ThingsIX Forwarder (remember to replace `1.0.3` with the latest version number and `5652` with the port number you have picked)
+Now run the ThingsIX Forwarder (remember to replace `1.0.8` with the latest version number and `5652` with the port number you have picked)
 ```bash
-docker run -d -p 5652:1680/udp --restart unless-stopped -v /etc/thingsix-forwarder:/etc/thingsix-forwarder --name thingsix-forwarder ghcr.io/thingsixfoundation/packet-handling/forwarder:1.0.3
+docker run -d -p 5652:1680/udp --restart unless-stopped -v /etc/thingsix-forwarder:/etc/thingsix-forwarder --name thingsix-forwarder ghcr.io/thingsixfoundation/packet-handling/forwarder:1.0.8 --default_frequency_plan=EU868
 ```
+
+From version 1.0.8 onwards the flags for the frequency plan are required:  --default_frequency_plan=EU868 or  --default_frequency_plan=AU915 (of course you can set other plans too, but there currently aren't any routers on mainnet for that).
 
 This will give an output like:
 ```

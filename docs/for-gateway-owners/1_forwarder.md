@@ -77,9 +77,11 @@ docker run -d --name thingsix-forwarder \
   -p 1680:1680/udp \
   --restart unless-stopped \
   -v /etc/thingsix-forwarder:/etc/thingsix-forwarder \
-  ghcr.io/thingsixfoundation/packet-handling/forwarder:${version}
+  ghcr.io/thingsixfoundation/packet-handling/forwarder:${version} --default_frequency_plan=EU868
 ```
-(replace `${version}` with the latest [release](https://github.com/ThingsIXFoundation/packet-handling/releases), for example: `1.0.0`, note: no 'v' prefix should be used).
+(replace `${version}` with the latest [release](https://github.com/ThingsIXFoundation/packet-handling/releases), for example: `1.0.0`, note: no 'v' prefix should be used). 
+
+From version 1.0.8 onwards the flags for the frequency plan are required:  --default_frequency_plan=EU868 or  --default_frequency_plan=AU915 (of course you can set other plans too, but there currently aren't any routers on mainnet for that).
 
 This example assumes that the ThingsIX forwarder listens on UDP port 1680. Make sure to open it in any firewalls and make sure to connect your gateways to it.
 
