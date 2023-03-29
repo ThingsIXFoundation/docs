@@ -80,7 +80,7 @@ By using a share of the Airtime sale over time to reward not only the Airtime bu
 The development and maintenance of the ThingsIX network will be funded by the ThingsIX Foundation, a non-profit organization. As discussed before, ThingsIX maintenance tokens will be sold and held by the foundation to fund initial and ongoing development. The ThingsIX foundation will distribute 75% of the ThingsIX maintenance tokens and hold 25% of the ThingsIX  maintenance tokens to fund ongoing maintenance, marketing and development. Of the 75%, 8% is allocated to the ThingsIX founders. 2% is allocated to the advisors.
 The ThingsIX foundation is controlled by three directors. Each year a vote will be held amongst the ThingsIX maintenance token holders to propose a new director to replace the director (a director may be re-chosen indefinitely).
 
-Changes regarding the network can be proposed via an Things Improvement Proposal (TIP) comparable to Ethereum’s EIP. TIPs should provide a proposal and proof-of-concept code (if applicable) to be acceptable.TIPs are voted on by all ThingsIX holders (so not the ThingsIX maintenance holders) and require a majority (by volume) of the votes.
+Changes regarding the network can be proposed via an Things Improvement Proposal (TIP) comparable to Ethereum’s EIP. TIPs should provide a proposal and proof-of-concept code (if applicable) to be acceptable. The opinion of the community abouts TIPs can be polled using a voting mechanism. However these votes are not binding as the final decision lies with the community-developers on what the implement. 
 
 
 The LoRa® Mark is a trademark of Semtech Corporation or its subsidiaries.
