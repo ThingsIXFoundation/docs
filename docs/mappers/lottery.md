@@ -1,9 +1,9 @@
 ---
-sidebar_position: 1
-title: Mapper lottery
+sidebar_position: 2
+title: Mapper Lottery
 ---
 
-# Mapper lottery
+# Mapper Lottery
 To obtain a mapper, users can participate in a lottery by buying a ticket using
 an ERC20 token. After the ticket buy period closes, a random value is generated
 to determine the results. The ThingsIX Foundation will then publish the outcome,
