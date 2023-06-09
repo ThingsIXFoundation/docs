@@ -59,6 +59,10 @@ Now click `Confirm` and switch to your wallet and follow the instructions to sig
 
 The ThingsIX App will now show the confirmation process of the registration transaction. After 128 blocks the Mapper is ready to use! 
 
+## Free Gateway Onboard
+
+The initial batches of ThingsIX Mappers come with a free gateway onboard. You can use this free gateway onboard on the same account as the ThingsIX Mapper was connected to. To do so, follow the instructions of your gateway, or on [Onboarding Gateway](../for-gateway-owners/onboarding-gateway.md) to onboard your gateway. Use the option to push the gateway onboard. You will see a slightly different gateway onboarding screen where you can only select 1 gateway to be onboarded for free. 
+
 ## Mapping using the ThingsIX Mapper
 
 The ThingsIX Mapper is used to measure the signal strength that Gateways connected to ThingsIX are providing at a location. Such measurement executed at a certain location is called a "Mapping Record". If no Gateway is within reach, no Mapping Record will be created. The gateway providing the strongest signal (confirming to certain validation checks) is determined to provide the best coverage at that location.

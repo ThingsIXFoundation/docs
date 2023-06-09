@@ -15,7 +15,7 @@ First make sure to connect a wallet. Instructions can be found here: [Connecting
 
 ## Onboard gateway
 Open in the top menu the Gateway -> Onboard page. When you created the gateway
-onboard message with the ThingsIX forwarder and opted to send the onboard
+onboard message with the ThingsIX forwarder and opted to push the onboard
 message to ThingsIX you will be presented with a list of pending gateway onboard
 messages. From this list select the gateways that you want to onboard and click
 on the add button.
