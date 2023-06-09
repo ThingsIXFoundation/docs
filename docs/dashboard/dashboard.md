@@ -8,6 +8,7 @@ earned rewards.
 ## Endpoint
 | Environment  | URL  |
 |---|---|
+| Mainnet  | https://app.thingsix.com  |
 | Testnet  | https://app-testnet.thingsix.com  |
 
 
