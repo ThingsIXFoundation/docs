@@ -13,6 +13,8 @@ ThingsIX introduces unique trusted mapping hardware to give a new dimension to n
 To read about the idea behind ThingsIX and the overall architecture please read the [whitepaper](whitepaper.md). 
 
 # Getting started
-To get started with the data-only network as a gateway-owner follow the [instructions for setting up a ThingsIX forwarder](./for-gateway-owners/1_forwarder.md).
+To get started with the ThingsIX Network as a gateway-owner see [Getting started for Gateway owners](./for-gateway-owners/getting-started.md)
+
+To get started with the ThingsIX Network as a mapper see [Getting started for Mappers](./mappers/getting-started.md)
 
 To start using the ThingsIX network see the [introduction for network users](./for-network-users/introduction.md). 

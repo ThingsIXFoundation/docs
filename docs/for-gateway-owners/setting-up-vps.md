@@ -24,10 +24,10 @@ If you don't like DigitalOcean, you can also consider alternatives like [Hetzner
 ## Creating the project
 
 Click 'Create Project' to create a new project so we can separate the ThingsIX forwarder from the rest of your VPS-es. 
-![Create project button](./3_setting_up_vps/create_project.png)
+![Create project button](./setting-up-vps/create_project.png)
 
 Fill in some details (you can enter whatever you want)
-![Create project](./3_setting_up_vps/create_project_2.png)
+![Create project](./setting-up-vps/create_project_2.png)
 
 And skip moving resources on the next page
 
@@ -36,39 +36,39 @@ Now it's time to create the VPS (or 'Droplet' as it's called at DigitalOcean).
 
 First click the 'Get started with a Droplet button':
 
-![Get started with a Droplet Button](./3_setting_up_vps/create_vps.png)
+![Get started with a Droplet Button](./setting-up-vps/create_vps.png)
 
 Now select a location that is geographically close to your LoRa gateways as LoRa and ThingsIX is latency sensitive. (tip: if you have gateways around the world you can create multiple instances in different locations). We pick Amsterdam for this tutorial but don't copy it 1:1 if you are not near to Amsterdam.
 
-![Select Location](./3_setting_up_vps/create_vps_2.png)
+![Select Location](./setting-up-vps/create_vps_2.png)
 
 Also select a datacenter. This doesn't really matter but as you will see in the next step, not every datacenter supports the smallest VMs/Droplets, so you might want to switch.
 
-![Select datacenter](./3_setting_up_vps/create_vps_3.png)
+![Select datacenter](./setting-up-vps/create_vps_3.png)
 
 For the image select 'Ubuntu' and select '22.04 (LTS) x64':
 
-![Select image](./3_setting_up_vps/create_vps_4.png)
+![Select image](./setting-up-vps/create_vps_4.png)
 
 For the size you can select one of the '512MB' or '1GB' plans under basic. This should be enough up to 50-100 gateways (depending on traffic)
 
-![Select size](./3_setting_up_vps/create_vps_5.png)
+![Select size](./setting-up-vps/create_vps_5.png)
 
 Now scroll down and create a password for the `root` user. Make sure to pick a secure password and don't share it. (Tip: setting up a SSH-key is even better, but for the simplicity of this tutorial this is skipped).
 
-![Set password](./3_setting_up_vps/create_vps_6.png)
+![Set password](./setting-up-vps/create_vps_6.png)
 
 Set a hostname that allows you to identify this server later on:
 
-![Set hostname](./3_setting_up_vps/create_vps_7.png)
+![Set hostname](./setting-up-vps/create_vps_7.png)
 
 Now it's time to create the VPS by clicking 'Create Droplet'. 
 
-![Create droplet](./3_setting_up_vps/create_vps_8.png)
+![Create droplet](./setting-up-vps/create_vps_8.png)
 
 Now we wait a little until the creation of the VPS is finished:
 
-![Droplet finished](./3_setting_up_vps/create_vps_9.png)
+![Droplet finished](./setting-up-vps/create_vps_9.png)
 
 Keep note of the IP-address of your VPS (`188.166.26.97` in this example, yours will be different!). Optionally you can use DNS to give it a resolvable hostname. Now click on the VPS name.
 
@@ -78,7 +78,7 @@ Keep note of the IP-address of your VPS (`188.166.26.97` in this example, yours 
 
  Now connect to the VPS by using either the console button
 
-![Connect to console](./3_setting_up_vps/setup_software.png)
+![Connect to console](./setting-up-vps/setup_software.png)
 
  or by using SSH to the IP with the 'root' user:
 ```bash
@@ -122,13 +122,13 @@ Now make the directory that will contain all the thingsix-forwarder related file
 mkdir /etc/thingsix-forwarder
 ```
 
-Next we can actually start the ThingsIX forwarder as docker container. First go to the [the forwarder docker repository](https://github.com/ThingsIXFoundation/packet-handling/pkgs/container/packet-handling%2Fforwarder) and take note of the latest version (for example `1.0.3` at the time of writing).
+Next we can actually start the ThingsIX forwarder as docker container. First go to the [the forwarder docker repository](https://github.com/ThingsIXFoundation/packet-handling/pkgs/container/packet-handling%2Fforwarder) and take note of the latest version (for example `1.1.0` at the time of writing).
 
 Now think of a random number under the 10000 to be used as port-number for the ThingsIX forwarder (we are using 5652 here). This will be the port number where LoRa gateways will send the received packets. 
 
-Now run the ThingsIX Forwarder (remember to replace `1.0.8` with the latest version number and `5652` with the port number you have picked)
+Now run the ThingsIX Forwarder (remember to replace `1.1.0` with the latest version number and `5652` with the port number you have picked)
 ```bash
-docker run -d -p 5652:1680/udp --restart unless-stopped -v /etc/thingsix-forwarder:/etc/thingsix-forwarder --name thingsix-forwarder ghcr.io/thingsixfoundation/packet-handling/forwarder:1.0.8 --default_frequency_plan=EU868
+docker run -d -p 5652:1680/udp --restart unless-stopped -v /etc/thingsix-forwarder:/etc/thingsix-forwarder --name thingsix-forwarder ghcr.io/thingsixfoundation/packet-handling/forwarder:1.1.0 --default_frequency_plan=EU868
 ```
 
 From version 1.0.8 onwards the flags for the frequency plan are required:  --default_frequency_plan=EU868 or  --default_frequency_plan=AU915 (of course you can set other plans too, but there currently aren't any routers on mainnet for that).
@@ -188,18 +188,13 @@ time="2022-12-20T09:50:44Z" level=info msg="unknown gateway recorded" file=/etc/
 ``` 
 Make sure you recognize all the gateway-ids, also called 'gateway EUI'. (The id/EUI is usually printed on the label of a LoRa gateway or provided in the web interface).
 
-You can import the gateways by running:
+You can import and push the onboards the gateways by running:
 ```bash
-docker exec thingsix-forwarder ./forwarder gateway import 0x782123189312Aa15c2C50A87F7Fe737DE38f3569
+docker exec thingsix-forwarder ./forwarder gateway import-and-push 0x782123189312Aa15c2C50A87F7Fe737DE38f3569
 ```
 
-This should give an output like: 
-```bash
-msg="imported 1 gateways, don't forget to onboard these with the above JSON message"
-```
-You can ignore the part about onboarding for now. 
+For every recorded gateway the forwarder generates an identity and stores it  with the gateways local id in the gateway store. It automatically pushes the onboarding records  to the ThingsIX Web App where it can be used to onboard your gateway(s), see: [Onboarding Gateway](./onboarding-gateway.md).
 
-Everything is now ready to forwarder packets on ThingsIX! 
 
 ## Auto-updating ThingsIX Forwarder
 You can use [Watchtower](https://containrrr.dev/watchtower/) to auto-update the ThingsIX Forwarder docker image by running:
