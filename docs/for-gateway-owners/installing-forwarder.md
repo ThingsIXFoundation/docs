@@ -106,7 +106,7 @@ that onboards the gateway in ThingsIX.
 
 Example:
 ```bash
-docker exec thingsix-forwarder ./forwarder gateway import-and-push 0016c001f1500812 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 
+docker exec thingsix-forwarder ./forwarder gateway import-and-push 0x782123189312Aa15c2C50A87F7Fe737DE38f3569 
 ```
 
 For every recorded gateway the forwarder generates an identity and stores it  with the gateways local id in the gateway store. It automatically pushes the onboarding records  to the ThingsIX Web App where it can be used to onboard your gateway(s), see: [Onboarding Gateway](./onboarding-gateway.md).
