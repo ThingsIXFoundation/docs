@@ -47,7 +47,7 @@ Requirements for all mappers.
 - The mapper has a U-Blox series M8, M9 or M10 GNSS-module. 
 - The mapper has a GNSS antenna that supports the GPS and Galileo frequencies. The GNSS antenna may be external, however internal antennas are preferred.
 
-For standard-projects:
+For standard-software projects:
 
 - The mapper has a ESP32 IC with Bluetooth antenna.
 - The ESP32 is connected to the STM32WL IC via UART and 1 GPIO for reset. 
@@ -57,6 +57,7 @@ The ESP32-IC can be replaced by another sufficiently powerful IC. However becaus
 
 ## Fees
 
-- Standard-project based on ESP32: 7.500 EUR ex. VAT per revision and model.
-- Custom-project: To be discussed.
+- For projects that can use the standard software (ESP32-based): 7.500 EUR ex. VAT.
+- Future revisions and models: To be discussed.
+- Custom IC Projects: To be discussed.
 - Mapper validation, software-programming and key-provisioning: 50 EUR ex. VAT per mapper
