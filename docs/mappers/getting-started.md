@@ -5,6 +5,12 @@ title: Getting Started with the ThingsIX Mapper
 
 # Getting Started with the ThingsIX Mapper
 
+## General Rules about mapping
+- you should use your mapper on the ground or very close to it (like in a car, bus, bike etc.) (not more than 4 Meters above the Ground!)
+- dont use your mapper at high buildings, hills, antenna tower, planes, space stations, drones etc.
+- please respect private areas like your neighbours gaarden, military bases and airports
+- dont do stupid things! (mapping on cliffs, glue the mapper on your animals etc.)
+
 ## Charging
 The ThingsIX Mapper has a USB-C connection that can be used for both powering the mapper and charging the mapper. Use a charger that can supply 2 Amps or more for a reliable charging and operating experience. 
 
